@@ -401,6 +401,13 @@ dist
 node_modules
 ```
 
+Edit your `src/index.js` file to include: 
+
+**src/index.js**  
+```js
+import css from './style.css';
+```
+
 Replace the "scripts" section of your `package.json` file with:
 
 **package.json**
