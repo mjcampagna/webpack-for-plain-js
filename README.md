@@ -12,6 +12,11 @@
     - [CSS Referenced Assets](#css-referenced-assets)
   - [Final Code](#final-code)
 
+**Follow-up Tutorials**
+
+[Webpack for Plain JS + CSS](https://github.com/mjcampagna/webpack-for-plain-js-css)  
+Builds on this tutorial, adding the Mini Extract CSS Plugin to include a separate `style.css` in your built application.
+
 ## Introduction
 
 I've read a lot of articles about Webpack. The best of them are dated, now irrelevant. The rest of them are simply insane.
