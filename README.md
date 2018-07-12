@@ -147,7 +147,38 @@ Our configuration is coming along, so let's revisit the empty `index.html` file 
 
 Note the HTML `<title>` element. Give your app a name!
 
-In a previous version of this article, we installed `html-webpack-plugin` at this point; I have since removed this plugin from my configuration.
+So that Webpack will include this file on build, we'll install the `html-webpack-plugin`.
+
+```sh
+npm install --save-dev html-webpack-plugin
+```
+
+We need to make two additions to our `webpack.config.js` file; require the module at the top, and invoke it at the bottom. The updated file looks like this:
+
+```js
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js'
+  },
+
+  plugins: [
+
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      inject: false
+    }),
+
+  ] // plugins
+
+};
+```
+
+The `html-webpack-plugin` modules has a [variety of options](https://github.com/jantimon/html-webpack-plugin#options), detailed in its docs. Here, we're telling it which HTML file to use, and we're not injected script tags, because we've added them manually to the file.
 
 Now the JavaScript. Because it's 2018 and the newer ECMAScript is all the rage, you probably want to include Babel, helpful for teaching the new slang to fogey browsers.
 
@@ -161,8 +192,8 @@ To use these, we'll need to grow our configuration file to include `modules` con
 
 **webpack.config.js**  
 ```js
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -384,6 +415,7 @@ Create a file `webpack.config.js` with these contents:
 **webpack.config.js**  
 ```js
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -438,6 +470,15 @@ module.exports = {
 
     ] // rules
   }, // module
+
+  plugins: [
+
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      inject: false
+    }),
+
+  ] // plugins
 
 };
 ```
