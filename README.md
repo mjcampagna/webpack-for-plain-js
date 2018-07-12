@@ -74,7 +74,7 @@ dist
 node_modules
 ```
 
-By default, Webpack will create the `dist` folder when it runs, and dump its output there. But we might like to clean up the existing `dist` when building anew, so let's set that up.
+By default, Webpack will create the `dist` folder when it runs, and dump its output there. It is my opinion that we should never store working files in `dist`. Webpack should build the folder in its entirety, and the `dist` folder should be entirely disposable -- if we delete it, Webpack and rebuild it in full. Thus, we might like to have some method of cleaning up the existing `dist` when building anew, so let's set that up.
 
 ```sh
 $ npm install --save-dev del-cli
@@ -135,7 +135,7 @@ Our configuration is coming along, so let's revisit the empty `index.html` file 
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>My App</title>
 
   </head>
   <body>
@@ -145,44 +145,11 @@ Our configuration is coming along, so let's revisit the empty `index.html` file 
 </html>
 ```
 
-Note the strange enclosure in the HTML `<title>` element. We'll be adding the `HtmlWebpackPlugin` to our configuration file momentarily, and this allows us to set the title via Webpack.
+Note the HTML `<title>` element. Give your app a name!
 
-To install the `HtmlWebpackPlugin`, run:
+In a previous version of this article, we installed `html-webpack-plugin` at this point; I have since removed this plugin from my configuration.
 
-```sh
-$ npm install --save-dev html-webpack-plugin
-```
-
-In our configuration file, we must require it at the top, then add the `plugins` configuration.
-
-**webpack.config.js**  
-```js
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
-
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js'
-  },
-  
-  plugins: [
-
-    new HtmlWebpackPlugin({
-      title: 'My App',
-      template: 'src/index.html',
-      inject: false
-    })
-
-  ] // plugins
-
-};
-```
-
-Again, note the `title` option in configuring `HtmlWebpackPlugin`; here we set the title that will show up in our HTML file.
-
-And now the JavaScript. Because it's 2018 and the newer ECMAScript is all the rage, you probably want to include Babel, helpful for teaching the new slang to fogey browsers.
+Now the JavaScript. Because it's 2018 and the newer ECMAScript is all the rage, you probably want to include Babel, helpful for teaching the new slang to fogey browsers.
 
 Install the following with npm.
 
@@ -218,16 +185,6 @@ module.exports = {
 
     ] // rules
   }, // module
-
-  plugins: [
-
-    new HtmlWebpackPlugin({
-      title: 'My App',
-      template: 'src/index.html',
-      inject: false
-    })
-
-  ] // plugins
 
 };
 ```
@@ -380,11 +337,11 @@ Build your file/folder structure as:
 
 **folders & files**  
 ```sh
+.gitignore
 node_modules/
 src/
   fonts/
   images/
-  .gitignore
   index.html
   index.js
   style.css
@@ -426,7 +383,6 @@ Create a file `webpack.config.js` with these contents:
 
 **webpack.config.js**  
 ```js
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -482,16 +438,6 @@ module.exports = {
 
     ] // rules
   }, // module
-
-  plugins: [
-
-    new HtmlWebpackPlugin({
-      title: 'My App',
-      template: 'src/index.html',
-      inject: false
-    })
-
-  ] // plugins
 
 };
 ```

@@ -1,4 +1,3 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -26,43 +25,33 @@ module.exports = {
       },
 
       {
-        test: /\.(png|jpg|jpeg|gif|webp|svg)$/,
+        test: /\.(gif|jpeg|jpg|png|svg|webp)$/,
         use: [
           {
             loader: 'url-loader',
             options: {
               limit: 8192,
               name: '[path]/[name].[ext]',
-              exclude: [/fonts/]
+              include: [/images/]
             }
           }
         ]
       },
 
       {
-        test: /\.(eot|woff|woff2|ttf|svg)$/,
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: [
           {
             loader: 'file-loader',
             options: {
               name: '[path]/[name].[ext]',
-              exclude: [/images/]
+              include: [/fonts/]
             }
           }
         ]
       }
 
-] // rules
+    ] // rules
   }, // module
-
-  plugins: [
-
-    new HtmlWebpackPlugin({
-      title: 'My App',
-      template: 'src/index.html',
-      inject: false
-    })
-
-  ] // plugins
 
 };
